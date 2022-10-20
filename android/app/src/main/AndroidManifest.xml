@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.jumbo.barcode_prototype">
    <application
-        android:label="barcode_prototype"
+        android:label="Jumbo Demo"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
