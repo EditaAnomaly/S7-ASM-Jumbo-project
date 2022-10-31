@@ -1,5 +1,6 @@
 import 'package:jumbo_app_flutter/models/ingredient.dart';
 import 'package:jumbo_app_flutter/models/price.dart';
+import 'package:jumbo_app_flutter/models/allergen.dart';
 
 class Product {
   final String id;
@@ -7,15 +8,16 @@ class Product {
   final Price price;
   final String quantity;
   final String image;
-  final List<Ingredient> ingredients;
+  late List<Ingredient> ingredients;
+  late List<Allergen> allergens;
 
-  Product(
-      {required this.id,
-      required this.title,
-      required this.price,
-      required this.quantity,
-      required this.image,
-      required this.ingredients});
+  Product({
+    required this.id,
+    required this.title,
+    required this.price,
+    required this.quantity,
+    required this.image,
+  });
 
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
@@ -24,9 +26,16 @@ class Product {
       price: Price.fromJson(json['prices']['price']),
       quantity: json['quantity'],
       image: json['imageInfo']['primaryView'][0]['url'],
-      ingredients: List<Ingredient>.from(json['ingredientInfo'][0]
-              ['ingredients']
-          .map((ingredient) => Ingredient.fromJson(ingredient))),
     );
+  }
+
+  setIngredients(List<dynamic> ingredients) {
+    this.ingredients = List<Ingredient>.from(
+        ingredients.map((ingredient) => Ingredient.fromJson(ingredient)));
+  }
+
+  setAllergens(List<String> allergens) {
+    this.allergens = List<Allergen>.from(
+        allergens.map((allergy) => Allergen.fromString(allergy)));
   }
 }
