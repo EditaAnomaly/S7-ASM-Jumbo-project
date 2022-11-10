@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:jumbo_app_flutter/models/allergen.dart';
@@ -76,29 +75,61 @@ class _MainPageState extends State<MainPage> {
       context: context, barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(product.title),
+          title: Column(
+            //mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: const [
+              Image(
+                image: AssetImage('images/warningsmol.png'),
+              ),
+              SizedBox(height: 20),
+              Text(
+                'Product Warning',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 20),
+              Text(
+                  'Pay attention! The Product contains the following dangerous ingredients:')
+            ],
+          ),
           content: SizedBox(
-              width: double.maxFinite,
-              child: ListView.builder(
-                itemCount: warnings.length,
-                itemBuilder: (context, index) {
-                  return ListTile(title: Text(warnings[index].message));
-                },
-              )),
+            width: double.maxFinite,
+            height: 500,
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: warnings.length,
+              itemBuilder: (context, index) {
+                return ListTile(title: Text(warnings[index].message));
+              },
+            ),
+          ),
           actions: [
             TextButton(
-              child: const Text("Don't add"),
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.black,
+                backgroundColor: const Color(0xffEEB717),
+                //padding: const EdgeInsets.all(16.0),
+                textStyle: const TextStyle(fontSize: 20),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },
-            ),
-            TextButton(
               child: const Text('Add anyway'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
             ),
+            OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  side: const BorderSide(
+                    width: 1.0,
+                    color: Color(0xffEEB717),
+                  ),
+                  textStyle: const TextStyle(fontSize: 20),
+                ),
+                child: const Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                }),
           ],
+          actionsAlignment: MainAxisAlignment.spaceEvenly,
         );
       },
     );
