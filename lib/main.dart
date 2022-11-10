@@ -2,8 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-
-import 'package:jumbo_app_flutter/services/api.dart';
+import 'package:jumbo_app_flutter/models/allergen.dart';
+import 'package:jumbo_app_flutter/models/product.dart';
+import 'package:jumbo_app_flutter/services/product.service.dart';
 
 void main() {
   runApp(const MyApp());
@@ -53,26 +54,24 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final api = Api();
-  // late Future<Product> _product;
+  final ProductService productService = ProductService();
+  late Product product;
+  late List<Allergen> warnings;
 
-  // void _setProduct(productId) {
-  //   setState(() {
-  //     _product = api.fetchProduct(productId);
-  //   });
-  // }
-
-  Future<void> _openBarcodeScanner() async {
+  _openBarcodeScanner() async {
     String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
         "#000000", "Cancel", true, ScanMode.BARCODE);
 
-    // _setProduct(barcodeScanRes);
-    api.fetchProduct(barcodeScanRes).then((product) {
-      _alertAboutProduct(product);
-    });
+    product = await productService.scan(barcodeScanRes);
+
+    warnings = productService.getWarnings(product);
+
+    if (warnings.isEmpty) return;
+
+    _alertAboutProduct(product, warnings);
   }
 
-  _alertAboutProduct(product) {
+  _alertAboutProduct(Product product, List<Allergen> warnings) {
     showDialog(
       context: context, barrierDismissible: false, // user must tap button!
 
@@ -82,9 +81,9 @@ class _MyHomePageState extends State<MyHomePage> {
           content: SizedBox(
               width: double.maxFinite,
               child: ListView.builder(
-                itemCount: product.ingredients.length,
+                itemCount: warnings.length,
                 itemBuilder: (context, index) {
-                  return ListTile(title: Text(product.ingredients[index].name));
+                  return ListTile(title: Text(warnings[index].message));
                 },
               )),
           actions: [
