@@ -29,6 +29,29 @@ class _MainPageState extends State<MainPage> {
   final ProductService productService = ProductService();
   late Product product;
   late List<Allergen> warnings;
+  int _selectedBottomNavIndex = 0;
+
+  // Test pages
+  static const List<Widget> _pages = <Widget>[
+    Icon(
+      Icons.shopping_basket_outlined,
+      size: 150,
+    ),
+    Icon(
+      Icons.search_outlined,
+      size: 150,
+    ),
+    Icon(
+      Icons.person_outline,
+      size: 150,
+    ),
+  ];
+
+  void _onBottomNavTapped(int index) {
+    setState(() {
+      _selectedBottomNavIndex = index;
+    });
+  }
 
   _openBarcodeScanner() async {
     String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
@@ -51,20 +74,51 @@ class _MainPageState extends State<MainPage> {
         title: const Text('Hello Lisa!'),
         backgroundColor: Colors.amber,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
-            Text('Scan product'),
-          ],
-        ),
+      body: IndexedStack(
+        // This method remembers the open page.
+        index: _selectedBottomNavIndex,
+        children: _pages,
       ),
+      // body: Center(
+      //   child: _pages.elementAt(_selectedBottomNavIndex),
+      // ),
       floatingActionButton: FloatingActionButton(
         onPressed: _openBarcodeScanner,
         backgroundColor: const Color(0xffEEB717),
         tooltip: 'Scan',
         child: const Image(
           image: AssetImage('images/barcode.png'),
+        ),
+      ),
+      bottomNavigationBar: Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(color: Colors.black, offset: Offset(0, 0)),
+          ],
+        ),
+        child: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_basket_outlined),
+              label: 'Basket',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search_outlined),
+              label: 'Catalogue',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person_outline),
+              label: 'Profile',
+            ),
+          ],
+          iconSize: 33,
+          unselectedFontSize: 13,
+          selectedFontSize: 13,
+          backgroundColor: Colors.white,
+          currentIndex: _selectedBottomNavIndex,
+          onTap: _onBottomNavTapped,
+          selectedItemColor: const Color(0xffEEB717),
         ),
       ),
     );
