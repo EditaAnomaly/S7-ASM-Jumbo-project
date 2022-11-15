@@ -29,8 +29,9 @@ class _BasketPageState extends State<BasketPage> {
       context: context, barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
+          shape: const Border(
+              left: BorderSide(width: 6.0, color: Color((0xffEEB717)))),
           title: Column(
-            //mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: const [
               Image(
@@ -48,12 +49,14 @@ class _BasketPageState extends State<BasketPage> {
           ),
           content: SizedBox(
             width: double.maxFinite,
-            height: 500,
+            //height: 400,
             child: ListView.builder(
               shrinkWrap: true,
               itemCount: warnings.length,
               itemBuilder: (context, index) {
-                return ListTile(title: Text(warnings[index].message));
+                return Text(warnings[index].message,
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold));
               },
             ),
           ),
@@ -62,7 +65,6 @@ class _BasketPageState extends State<BasketPage> {
               style: TextButton.styleFrom(
                 foregroundColor: Colors.black,
                 backgroundColor: const Color(0xffEEB717),
-                //padding: const EdgeInsets.all(16.0),
                 textStyle: const TextStyle(fontSize: 20),
               ),
               onPressed: () {
@@ -70,18 +72,19 @@ class _BasketPageState extends State<BasketPage> {
               },
               child: const Text('Add anyway'),
             ),
-            OutlinedButton(
+            TextButton(
                 style: OutlinedButton.styleFrom(
+                  //padding: const EdgeInsets.symmetric(vertical: 8.0),
                   side: const BorderSide(
-                    width: 1.0,
                     color: Color(0xffEEB717),
                   ),
                   textStyle: const TextStyle(fontSize: 20),
                 ),
-                child: const Text('Cancel'),
+                child:
+                    const Text('Cancel', style: TextStyle(color: Colors.black)),
                 onPressed: () {
                   Navigator.of(context).pop();
-                }),
+                })
           ],
           actionsAlignment: MainAxisAlignment.spaceEvenly,
         );
