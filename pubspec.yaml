@@ -43,6 +43,9 @@ dependencies:
   # Fetching data using http requests
   http: ^0.13.5
 
+  # Bottom navigation
+  flutter_bloc: ^8.1.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
