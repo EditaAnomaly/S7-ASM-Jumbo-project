@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jumbo_app_flutter/widgets/preferences/preference_selector.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -15,7 +16,15 @@ class _ProfilePageState extends State<ProfilePage> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
       ),
-      // body
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const <Widget>[
+            PreferenceSelector(),
+          ],
+        ),
+      ),
     );
   }
 }
