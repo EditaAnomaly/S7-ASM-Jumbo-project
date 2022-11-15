@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 // import 'package:jumbo_app_flutter/models/allergen.dart';
 // import 'package:jumbo_app_flutter/models/product.dart';
 // import 'package:jumbo_app_flutter/services/product.service.dart';
 
-class CataloguePage extends StatelessWidget {
+class CataloguePage extends StatefulWidget {
+  const CataloguePage({super.key});
+  @override
+  State<CataloguePage> createState() => _CataloguePageState();
+}
+
+class _CataloguePageState extends State<CataloguePage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      // color: Colors.white,
-      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Text(
-          'Catalogue Page',
-          style: Theme.of(context).textTheme.headline3,
-        ),
-      ]),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Catalogue'),
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+      ),
+      // body
     );
   }
 }

@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-// import 'package:jumbo_app_flutter/models/allergen.dart';
-// import 'package:jumbo_app_flutter/models/product.dart';
-// import 'package:jumbo_app_flutter/services/product.service.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      // color: Colors.white,
-      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Text(
-          'Profile Page',
-          style: Theme.of(context).textTheme.headline3,
-        ),
-      ]),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Profile'),
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+      ),
+      // body
     );
   }
 }
