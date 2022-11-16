@@ -1,11 +1,11 @@
 import 'package:jumbo_app_flutter/models/allergen.dart';
 import 'package:jumbo_app_flutter/models/product.dart';
+import 'package:jumbo_app_flutter/services/preference.service.dart';
 import 'api.service.dart';
 import 'dart:convert';
 
 class ProductService {
   final apiService = Api();
-  List<String> allergens = ["Pinda's"];
 
   Future<Product> scan(barcode) async {
     var product = await fetchProduct(barcode);
@@ -34,17 +34,9 @@ class ProductService {
     product.setAllergens(json['allergyText'].split(','));
   }
 
-  setAllergen(String allergen) {
-    allergens.add(allergen);
-  }
-
-  removeAllergen(String allergen) {
-    allergens.remove(allergen);
-  }
-
   List<Allergen> getWarnings(Product product) {
     return product.allergens.where((allergen) {
-      return allergens.contains(allergen.allergen);
+      return PreferenceService.allergens.contains(allergen.allergen);
     }).toList();
   }
 }

@@ -18,9 +18,12 @@ class _BasketPageState extends State<BasketPage> {
   _openBarcodeScanner() async {
     String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
         "#000000", "Cancel", true, ScanMode.BARCODE);
+
     product = await productService.scan(barcodeScanRes);
     warnings = productService.getWarnings(product);
+
     if (warnings.isEmpty) return;
+
     _alertAboutProduct(product, warnings);
   }
 
@@ -49,7 +52,6 @@ class _BasketPageState extends State<BasketPage> {
           ),
           content: SizedBox(
             width: double.maxFinite,
-            //height: 400,
             child: ListView.builder(
               shrinkWrap: true,
               itemCount: warnings.length,
@@ -74,7 +76,6 @@ class _BasketPageState extends State<BasketPage> {
             ),
             TextButton(
                 style: OutlinedButton.styleFrom(
-                  //padding: const EdgeInsets.symmetric(vertical: 8.0),
                   side: const BorderSide(
                     color: Color(0xffEEB717),
                   ),
@@ -100,7 +101,6 @@ class _BasketPageState extends State<BasketPage> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
       ),
-      // body
       floatingActionButton: FloatingActionButton(
         onPressed: _openBarcodeScanner,
         backgroundColor: const Color(0xffEEB717),
