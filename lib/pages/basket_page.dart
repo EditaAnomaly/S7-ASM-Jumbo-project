@@ -44,9 +44,35 @@ class _BasketPageState extends State<BasketPage> {
         onPressed: _openBarcodeScanner,
         backgroundColor: const Color(0xffEEB717),
         tooltip: 'Scan',
-        child: const Image(
-          image: AssetImage('images/barcode.png'),
-        ),
+        foregroundColor: Colors.black,
+        child: const Icon(Icons.qr_code_scanner_rounded),
+      ),
+      body: Container(
+        margin: const EdgeInsets.all(20),
+        padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+        height: MediaQuery.of(context).size.height / 30,
+        width: MediaQuery.of(context).size.width / 5,
+        decoration: const BoxDecoration(
+            border: Border(
+              top: BorderSide(
+                  width: 1,
+                  color: Color(0xffEEB717),
+                  style: BorderStyle.solid), //BorderSide
+              bottom: BorderSide(
+                  width: 1,
+                  color: Color(0xffEEB717),
+                  style: BorderStyle.solid), //BorderSide
+              left: BorderSide(
+                  width: 1,
+                  color: Color(0xffEEB717),
+                  style: BorderStyle.solid), //Borderside
+              right: BorderSide(
+                  width: 1,
+                  color: Color(0xffEEB717),
+                  style: BorderStyle.solid), //BorderSide
+            ),
+            borderRadius: BorderRadius.all(Radius.circular(20.0))),
+        child: const Text('amount'),
       ),
     );
   }
