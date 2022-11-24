@@ -12,9 +12,23 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
+        title: Row(children: const <Widget>[
+          Text('Your ',
+              style: TextStyle(
+                fontSize: 24,
+              )),
+          Text(
+            'Profile',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ]),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
+        centerTitle: false,
+        leadingWidth: 0,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),

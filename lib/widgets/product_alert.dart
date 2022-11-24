@@ -4,8 +4,8 @@ import 'package:jumbo_app_flutter/models/product.dart';
 import 'package:jumbo_app_flutter/services/product.service.dart';
 
 class ProductAlert extends StatelessWidget {
-  ProductAlert(this.product, this.warnings, {super.key});
-
+  ProductAlert(this.product, this.warnings, this.callback, {super.key});
+  final Function(Product) callback;
   final ProductService productService = ProductService();
   final Product product;
   final List<Allergen> warnings;
@@ -56,6 +56,7 @@ class ProductAlert extends StatelessWidget {
             textStyle: const TextStyle(fontSize: 20),
           ),
           onPressed: () {
+            callback(product);
             Navigator.of(context).pop();
           },
           child: const Text('Add anyway'),
