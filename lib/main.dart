@@ -18,6 +18,7 @@ class App extends StatelessWidget {
         create: (context) => BottomNavCubit(),
         child: MaterialApp(
           theme: ThemeData(
+            fontFamily: 'Jumbo',
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
           home: const MainPage(),

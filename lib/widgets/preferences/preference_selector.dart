@@ -76,7 +76,7 @@ class _PreferenceSelectorState extends State<PreferenceSelector> {
                 margin: const EdgeInsets.only(right: 8.0, bottom: 8.0),
                 child: OutlinedButton(
                   onPressed: () {
-                    _removePreference(item);
+                    _openOptionDialog();
                   },
                   style: OutlinedButton.styleFrom(
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
