@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jumbo_app_flutter/pages/arkit_page.dart';
 import 'cubit/bottom_nav_cubit.dart';
 import 'pages/basket_page.dart';
 import 'pages/catalogue_page.dart';
 import 'pages/profile_page.dart';
 
-void main() {
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const App());
 }
 
@@ -37,6 +45,7 @@ class _MainPageState extends State<MainPage> {
     const BasketPage(),
     const CataloguePage(),
     const ProfilePage(),
+    const ARNavigationWidget(),
   ];
 
   @override
@@ -67,6 +76,8 @@ class _MainPageState extends State<MainPage> {
             icon: Icon(Icons.search_outlined), label: "Catalogue"),
         BottomNavigationBarItem(
             icon: Icon(Icons.person_outline), label: "Profile"),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.location_city), label: "Navigation"),
       ],
       iconSize: 33,
       unselectedFontSize: 13,
