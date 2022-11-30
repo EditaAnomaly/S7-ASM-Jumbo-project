@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jumbo_app_flutter/models/allergen.dart';
-import 'package:jumbo_app_flutter/models/product.dart';
+import 'package:jumbo_app_flutter/models/products/allergen.dart';
+import 'package:jumbo_app_flutter/models/products/product.dart';
 import 'package:jumbo_app_flutter/services/product.service.dart';
 
 class ProductAlert extends StatelessWidget {

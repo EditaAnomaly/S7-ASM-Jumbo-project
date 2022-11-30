@@ -1,5 +1,5 @@
-import 'package:jumbo_app_flutter/models/allergen.dart';
-import 'package:jumbo_app_flutter/models/product.dart';
+import 'package:jumbo_app_flutter/models/products/allergen.dart';
+import 'package:jumbo_app_flutter/models/products/product.dart';
 import 'package:jumbo_app_flutter/services/preference.service.dart';
 import 'api.service.dart';
 import 'dart:convert';
