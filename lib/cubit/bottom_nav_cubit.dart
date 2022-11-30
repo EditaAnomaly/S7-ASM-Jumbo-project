@@ -10,4 +10,5 @@ class BottomNavCubit extends Cubit<int> {
   void getBasket() => emit(0);
   void getCatalogue() => emit(1);
   void getProfile() => emit(2);
+  void getArview() => emit(3);
 }

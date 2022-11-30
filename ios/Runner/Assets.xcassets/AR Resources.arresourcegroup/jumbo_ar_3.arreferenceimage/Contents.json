@@ -1,0 +1,16 @@
+{
+  "images" : [
+    {
+      "filename" : "jumbo_ar_3.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "unit" : "centimeters",
+    "width" : 11.319076133447391
+  }
+}
