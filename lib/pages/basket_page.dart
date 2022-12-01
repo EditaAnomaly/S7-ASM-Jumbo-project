@@ -4,6 +4,7 @@ import 'package:jumbo_app_flutter/models/basket.dart';
 import 'package:jumbo_app_flutter/models/products/allergen.dart';
 import 'package:jumbo_app_flutter/models/products/product.dart';
 import 'package:jumbo_app_flutter/services/product.service.dart';
+import 'package:jumbo_app_flutter/widgets/loading_dialog.dart';
 import 'package:jumbo_app_flutter/widgets/products/price_text.dart';
 import 'package:jumbo_app_flutter/widgets/products/product_alert.dart';
 import 'package:jumbo_app_flutter/widgets/products/basket_list.dart';
@@ -28,8 +29,13 @@ class _BasketPageState extends State<BasketPage> {
       ScanMode.BARCODE,
     );
 
+    _onLoading();
+
     scannedProduct = await productService.scan(barcodeScanRes);
     warnings = productService.getWarnings(scannedProduct);
+
+    if (!mounted) return;
+    Navigator.of(context).pop();
 
     if (warnings.isEmpty) {
       _addToBasket(scannedProduct);
@@ -37,6 +43,10 @@ class _BasketPageState extends State<BasketPage> {
       return;
     }
 
+    _onProductAlert();
+  }
+
+  _onProductAlert() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -45,6 +55,16 @@ class _BasketPageState extends State<BasketPage> {
           warnings,
           _addToBasket,
         );
+      },
+    );
+  }
+
+  _onLoading() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const LoadingDialog();
       },
     );
   }
