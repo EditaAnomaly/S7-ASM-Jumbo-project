@@ -8,6 +8,7 @@ import 'package:jumbo_app_flutter/widgets/loading_dialog.dart';
 import 'package:jumbo_app_flutter/widgets/products/price_text.dart';
 import 'package:jumbo_app_flutter/widgets/products/product_alert.dart';
 import 'package:jumbo_app_flutter/widgets/products/basket_list.dart';
+import 'package:jumbo_app_flutter/widgets/products/empty_basket.dart';
 
 class BasketPage extends StatefulWidget {
   const BasketPage({super.key});
@@ -102,21 +103,7 @@ class _BasketPageState extends State<BasketPage> {
             Expanded(
               child: BasketList(Basket.items, _addToBasket, _removeFromBasket),
             ),
-          if (Basket.items.isEmpty)
-            Column(children: <Widget>[
-              Container(
-                  margin: const EdgeInsets.all(35),
-                  child:
-                      const Image(image: AssetImage("images/basketempty.png"))),
-              Container(
-                margin: const EdgeInsets.all(15),
-                child: const Text(
-                  "Your basket is empty",
-                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.w800),
-                ),
-              ),
-              const Text("Time to fill your basket."),
-            ]),
+          if (Basket.items.isEmpty) EmptyBasket(),
           PriceText(basket.getTotal())
         ],
       ),
