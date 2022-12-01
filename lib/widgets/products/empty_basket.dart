@@ -13,7 +13,8 @@ class _EmptyBasketState extends State<EmptyBasket> {
     return Column(children: <Widget>[
       Container(
           margin: const EdgeInsets.all(35),
-          child: const Image(image: AssetImage("images/basketempty.png"))),
+          child:
+              const Image(image: AssetImage("images/basketempty-no-bg.png"))),
       Container(
         margin: const EdgeInsets.all(15),
         child: const Text(
