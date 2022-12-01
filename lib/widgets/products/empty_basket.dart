@@ -10,10 +10,18 @@ class EmptyBasket extends StatefulWidget {
 class _EmptyBasketState extends State<EmptyBasket> {
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: <Widget>[
-        Container(child: const Image(image: AssetImage("images/profile.png"))),
-      ],
-    );
+    return Column(children: <Widget>[
+      Container(
+          margin: const EdgeInsets.all(35),
+          child: const Image(image: AssetImage("images/basketempty.png"))),
+      Container(
+        margin: const EdgeInsets.all(15),
+        child: const Text(
+          "Your basket is empty",
+          style: TextStyle(fontSize: 26, fontWeight: FontWeight.w800),
+        ),
+      ),
+      const Text("Time to fill your basket."),
+    ]);
   }
 }
