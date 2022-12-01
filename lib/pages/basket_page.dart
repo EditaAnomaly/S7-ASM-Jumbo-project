@@ -102,6 +102,21 @@ class _BasketPageState extends State<BasketPage> {
             Expanded(
               child: BasketList(Basket.items, _addToBasket, _removeFromBasket),
             ),
+          if (Basket.items.isEmpty)
+            Column(children: <Widget>[
+              Container(
+                  margin: const EdgeInsets.all(35),
+                  child:
+                      const Image(image: AssetImage("images/basketempty.png"))),
+              Container(
+                margin: const EdgeInsets.all(15),
+                child: const Text(
+                  "Your basket is empty",
+                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.w800),
+                ),
+              ),
+              const Text("Time to fill your basket."),
+            ]),
           PriceText(basket.getTotal())
         ],
       ),
