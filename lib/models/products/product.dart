@@ -1,6 +1,6 @@
-import 'package:jumbo_app_flutter/models/ingredient.dart';
-import 'package:jumbo_app_flutter/models/price.dart';
-import 'package:jumbo_app_flutter/models/allergen.dart';
+import 'package:jumbo_app_flutter/models/products/ingredient.dart';
+import 'package:jumbo_app_flutter/models/products/price.dart';
+import 'package:jumbo_app_flutter/models/products/allergen.dart';
 
 class Product {
   final String id;
