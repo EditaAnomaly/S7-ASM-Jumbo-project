@@ -39,6 +39,7 @@ dependencies:
 
   # Scanning barcodes
   flutter_barcode_scanner: ^2.0.0
+  fast_barcode_scanner: ^1.1.0
 
   # Fetching data using http requests
   http: ^0.13.5
