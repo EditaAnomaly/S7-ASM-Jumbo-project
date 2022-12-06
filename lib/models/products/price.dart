@@ -18,4 +18,13 @@ class Price {
       amount: json['amount'],
     );
   }
+
+  String getInteger() {
+    return (amount / 100).floor().toString();
+  }
+
+  String getFractional() {
+    String s = (amount / 100).toStringAsFixed(2);
+    return s.split(".")[1];
+  }
 }

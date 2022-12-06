@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:jumbo_app_flutter/models/allergen.dart';
-import 'package:jumbo_app_flutter/models/product.dart';
+import 'package:jumbo_app_flutter/models/basket.dart';
+import 'package:jumbo_app_flutter/models/products/allergen.dart';
+import 'package:jumbo_app_flutter/models/products/product.dart';
 import 'package:jumbo_app_flutter/services/product.service.dart';
-import 'package:jumbo_app_flutter/widgets/product_alert.dart';
+import 'package:jumbo_app_flutter/widgets/loading_dialog.dart';
+import 'package:jumbo_app_flutter/widgets/products/price_text.dart';
+import 'package:jumbo_app_flutter/widgets/products/product_alert.dart';
+import 'package:jumbo_app_flutter/widgets/products/basket_list.dart';
+import 'package:jumbo_app_flutter/widgets/products/empty_basket.dart';
 
 class BasketPage extends StatefulWidget {
   const BasketPage({super.key});
@@ -13,37 +18,67 @@ class BasketPage extends StatefulWidget {
 
 class _BasketPageState extends State<BasketPage> {
   final ProductService productService = ProductService();
-  late Product product;
+  final Basket basket = Basket();
+  late Product scannedProduct;
   late List<Allergen> warnings;
-  final List<Product> basket = [];
 
   _openBarcodeScanner() async {
     String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-        "#000000", "Cancel", true, ScanMode.BARCODE);
+      "#000000",
+      "Cancel",
+      true,
+      ScanMode.BARCODE,
+    );
 
-    product = await productService.scan(barcodeScanRes);
-    warnings = productService.getWarnings(product);
+    _onLoading();
+
+    scannedProduct = await productService.scan(barcodeScanRes);
+    warnings = productService.getWarnings(scannedProduct);
+
+    if (!mounted) return;
+    Navigator.of(context).pop();
 
     if (warnings.isEmpty) {
-      _addToBasket(product);
+      _addToBasket(scannedProduct);
 
       return;
     }
 
+    _onProductAlert();
+  }
+
+  _onProductAlert() {
     showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return ProductAlert(
-            product,
-            warnings,
-            _addToBasket,
-          );
-        });
+      context: context,
+      builder: (BuildContext context) {
+        return ProductAlert(
+          scannedProduct,
+          warnings,
+          _addToBasket,
+        );
+      },
+    );
+  }
+
+  _onLoading() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const LoadingDialog();
+      },
+    );
   }
 
   _addToBasket(Product product) {
     setState(() {
-      basket.add(product);
+      basket.addProduct(product);
+    });
+  }
+
+  _removeFromBasket(Product product) {
+    setState(() {
+      basket.removeProduct(product);
     });
   }
 
@@ -62,57 +97,16 @@ class _BasketPageState extends State<BasketPage> {
         foregroundColor: Colors.black,
         child: const Icon(Icons.qr_code_scanner_rounded),
       ),
-      body: ListView(children: <Widget>[
-        if (basket.isEmpty) ...[
-          const Text('nothing in basket'),
-        ] else ...[
-          for (product in basket)
-            Row(children: <Widget>[
-              Container(
-                  margin: const EdgeInsets.fromLTRB(20, 20, 10, 20),
-                  padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
-                  height: MediaQuery.of(context).size.height / 30,
-                  width: MediaQuery.of(context).size.width / 5,
-                  decoration: const BoxDecoration(
-                      border: Border(
-                        top: BorderSide(
-                            width: 1,
-                            color: Color(0xffEEB717),
-                            style: BorderStyle.solid),
-                        bottom: BorderSide(
-                            width: 1,
-                            color: Color(0xffEEB717),
-                            style: BorderStyle.solid),
-                        left: BorderSide(
-                            width: 1,
-                            color: Color(0xffEEB717),
-                            style: BorderStyle.solid),
-                        right: BorderSide(
-                            width: 1,
-                            color: Color(0xffEEB717),
-                            style: BorderStyle.solid),
-                      ),
-                      borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                  child: const Center(
-                    child: Text('1'),
-                  )),
-              Container(
-                margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                child: Image.network(product.image, height: 30, width: 30),
-              ),
-              Flexible(child: Text(product.title)),
-              Container(
-                margin: const EdgeInsets.fromLTRB(0, 0, 20, 0),
-                child: Text(product.price.toString()),
-              ),
-            ]),
-          const Divider(
-            color: Colors.grey,
-            height: 0,
-            thickness: 0.3,
-          )
-        ]
-      ]),
+      body: Column(
+        children: [
+          if (Basket.items.isNotEmpty)
+            Expanded(
+              child: BasketList(Basket.items, _addToBasket, _removeFromBasket),
+            ),
+          if (Basket.items.isEmpty) EmptyBasket(),
+          PriceText(basket.getTotal())
+        ],
+      ),
     );
   }
 }
