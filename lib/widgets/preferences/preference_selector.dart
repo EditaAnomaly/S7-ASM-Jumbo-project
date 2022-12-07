@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jumbo_app_flutter/models/preference_option.dart';
 import 'package:jumbo_app_flutter/services/preference.service.dart';
 import 'package:jumbo_app_flutter/widgets/preferences/preference_dialog.dart';
-import 'package:jumbo_app_flutter/widgets/products/first_use_disclaimer.dart';
+import 'package:jumbo_app_flutter/widgets/preferences/first_use_disclaimer.dart';
 
 bool firstUse = true;
 
@@ -87,7 +87,6 @@ class _PreferenceSelectorState extends State<PreferenceSelector> {
                     } else {
                       _openOptionDialog();
                     }
-                    // _openOptionDialog();
                   },
                   style: OutlinedButton.styleFrom(
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,

@@ -5,9 +5,11 @@ import 'package:jumbo_app_flutter/widgets/products/price_text.dart';
 
 class BasketItemCell extends StatefulWidget {
   final BasketItem item;
-  final Function(BasketItem, String) update;
+  final bool hideAmount;
+  final Function(BasketItem, String)? update;
 
-  const BasketItemCell(this.item, this.update, {super.key});
+  const BasketItemCell(this.item,
+      {super.key, this.hideAmount = false, this.update});
 
   @override
   State<StatefulWidget> createState() => _BasketItemCellState();
@@ -15,7 +17,9 @@ class BasketItemCell extends StatefulWidget {
 
 class _BasketItemCellState extends State<BasketItemCell> {
   _changeAmount(String action) {
-    widget.update(widget.item, action);
+    if (!widget.hideAmount && widget.update != null) {
+      widget.update!(widget.item, action);
+    }
   }
 
   @override
@@ -26,7 +30,16 @@ class _BasketItemCellState extends State<BasketItemCell> {
           padding: const EdgeInsets.all(8),
           child: Row(
             children: <Widget>[
-              AmountWidget(widget.item.amount, _changeAmount),
+              if (widget.hideAmount)
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Text(
+                    "${widget.item.amount}",
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                )
+              else
+                AmountWidget(widget.item.amount, _changeAmount),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4),
                 child: Image.network(

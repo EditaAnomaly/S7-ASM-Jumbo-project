@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:jumbo_app_flutter/pages/payment_page.dart';
+import 'package:jumbo_app_flutter/models/shopping_list.dart';
 import 'package:jumbo_app_flutter/services/settings.service.dart';
-import 'package:jumbo_app_flutter/widgets/basket/barcode_scanner.dart';
-import 'package:jumbo_app_flutter/widgets/basket/basket_panel.dart';
+import 'package:jumbo_app_flutter/widgets/barcode_scanner.dart';
+import 'package:jumbo_app_flutter/widgets/slider_panel/slider_panel.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:fast_barcode_scanner/fast_barcode_scanner.dart';
 import 'package:jumbo_app_flutter/models/basket.dart';
@@ -26,6 +26,7 @@ class BasketPage extends StatefulWidget {
 class _BasketPageState extends State<BasketPage> {
   final ProductService productService = ProductService();
   final Basket basket = Basket();
+  final ShoppingList shoppingList = ShoppingList();
   late Product product;
   late List<Allergen> warnings;
 
@@ -131,15 +132,6 @@ class _BasketPageState extends State<BasketPage> {
     _setScanning(true);
   }
 
-  _onPay() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const PaymentPage(),
-      ),
-    );
-  }
-
   _setScanning(bool value) {
     if (isScanning && !value) {
       isScanning = value;
@@ -170,10 +162,11 @@ class _BasketPageState extends State<BasketPage> {
 
     return Scaffold(
       appBar: CustomAppBar(
-          leading: "Your",
-          pageName: "Basket",
-          amount: basket.getAmount(),
-          appBar: AppBar()),
+        leading: "Your",
+        pageName: "Basket",
+        amount: basket.getAmount(),
+        appBar: AppBar(),
+      ),
       body: SlidingUpPanel(
         controller: panelController,
         defaultPanelState: PanelState.OPEN,
@@ -188,13 +181,12 @@ class _BasketPageState extends State<BasketPage> {
             ),
           ],
         ),
-        panelBuilder: (scrollController) => BasketPanel(
+        panelBuilder: (scrollController) => SliderPanel(
           basket,
           panelController,
           scrollController,
           _addToBasket,
           _removeFromBasket,
-          _onPay,
         ),
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(16),

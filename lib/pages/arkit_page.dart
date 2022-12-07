@@ -2,11 +2,14 @@ import 'package:arkit_plugin/arkit_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:jumbo_app_flutter/models/navigation/destination.dart';
 import 'package:jumbo_app_flutter/models/navigation/node.dart';
+import 'package:jumbo_app_flutter/models/shopping_list.dart';
 import 'package:jumbo_app_flutter/services/navigation.service.dart';
+import 'package:jumbo_app_flutter/widgets/appbar.dart';
 import 'package:vector_math/vector_math_64.dart';
 
 class ARNavigationWidget extends StatefulWidget {
-  const ARNavigationWidget({super.key});
+  final Category category;
+  const ARNavigationWidget({super.key, required this.category});
 
   @override
   State<ARNavigationWidget> createState() => _ARNavigationWidgetState();
@@ -26,19 +29,25 @@ class _ARNavigationWidgetState extends State<ARNavigationWidget> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: const Text('ARKit in Flutter')),
-        body: ARKitSceneView(
-          onARKitViewCreated: onARKitViewCreated,
-          detectionImagesGroupName: "AR Resources",
-        ),
-      );
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: CustomAppBar(
+        leading: "Finding",
+        pageName: widget.category.name,
+        appBar: AppBar(),
+      ),
+      body: ARKitSceneView(
+        onARKitViewCreated: onARKitViewCreated,
+        detectionImagesGroupName: "AR Resources",
+      ),
+    );
+  }
 
   void onARKitViewCreated(ARKitController arkitController) async {
     this.arkitController = arkitController;
 
     Destination destination =
-        await navigationService.fetchDestination("develop");
+        await navigationService.fetchDestination(widget.category.destination);
 
     arkitController.onAddNodeForAnchor = (anchor) {
       if (anchor is ARKitImageAnchor) {
