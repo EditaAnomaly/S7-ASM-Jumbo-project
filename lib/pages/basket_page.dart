@@ -10,6 +10,8 @@ import 'package:jumbo_app_flutter/models/products/product.dart';
 import 'package:jumbo_app_flutter/services/product.service.dart';
 import 'package:jumbo_app_flutter/widgets/loading_dialog.dart';
 import 'package:jumbo_app_flutter/widgets/products/product_alert.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class BasketPage extends StatefulWidget {
   const BasketPage({super.key});
@@ -37,6 +39,7 @@ class _BasketPageState extends State<BasketPage> {
     Navigator.of(context).pop(); // removes loading dialog
 
     if (warnings.isEmpty) {
+      _successFeedback();
       _addToBasket(scannedProduct);
       _setScanning(true);
       return;
@@ -45,7 +48,8 @@ class _BasketPageState extends State<BasketPage> {
     _onProductAlert();
   }
 
-  _onProductAlert() {
+  _onProductAlert() async {
+    _errorFeedback();
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -67,6 +71,20 @@ class _BasketPageState extends State<BasketPage> {
         return const LoadingDialog();
       },
     );
+  }
+
+  _successFeedback() async {
+    final player = AudioPlayer();
+    await player.play(AssetSource('sounds/scanned.mp3'));
+    FeedbackType type = FeedbackType.medium;
+    Vibrate.feedback(type);
+  }
+
+  _errorFeedback() async {
+    final player = AudioPlayer();
+    await player.play(AssetSource('sounds/warning.mp3'));
+    FeedbackType type = FeedbackType.warning;
+    Vibrate.feedback(type);
   }
 
   _addToBasket(Product product) {
