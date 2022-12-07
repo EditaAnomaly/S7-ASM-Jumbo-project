@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class FirstUseDisclaimer extends StatelessWidget {
-  const FirstUseDisclaimer({super.key});
-
+  const FirstUseDisclaimer(this.callback, {super.key});
+  final Function() callback;
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -22,10 +22,6 @@ class FirstUseDisclaimer extends StatelessWidget {
           )
         ],
       ),
-      content: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: []),
       actions: [
         TextButton(
           style: TextButton.styleFrom(
@@ -35,6 +31,7 @@ class FirstUseDisclaimer extends StatelessWidget {
           ),
           onPressed: () {
             Navigator.of(context).pop();
+            callback();
           },
           child: const Text('Acknowledge'),
         ),
