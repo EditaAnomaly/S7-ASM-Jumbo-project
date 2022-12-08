@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:jumbo_app_flutter/models/preference_option.dart';
 import 'package:jumbo_app_flutter/services/preference.service.dart';
 import 'package:jumbo_app_flutter/widgets/preferences/preference_dialog.dart';
+import 'package:jumbo_app_flutter/widgets/products/first_use_disclaimer.dart';
+
+bool firstUse = true;
 
 class PreferenceSelector extends StatefulWidget {
   const PreferenceSelector({super.key});
@@ -54,6 +57,15 @@ class _PreferenceSelectorState extends State<PreferenceSelector> {
     );
   }
 
+  _openFirstUseDisclaimer() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return FirstUseDisclaimer(_openOptionDialog);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -76,7 +88,13 @@ class _PreferenceSelectorState extends State<PreferenceSelector> {
                 margin: const EdgeInsets.only(right: 8.0, bottom: 8.0),
                 child: OutlinedButton(
                   onPressed: () {
-                    _openOptionDialog();
+                    if (firstUse == true) {
+                      _openFirstUseDisclaimer();
+                      firstUse = false;
+                    } else {
+                      _openOptionDialog();
+                    }
+                    // _openOptionDialog();
                   },
                   style: OutlinedButton.styleFrom(
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -100,7 +118,13 @@ class _PreferenceSelectorState extends State<PreferenceSelector> {
                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
               onPressed: () {
-                _openOptionDialog();
+                // _openOptionDialog();
+                if (firstUse == true) {
+                  _openFirstUseDisclaimer();
+                  firstUse = false;
+                } else {
+                  _openOptionDialog();
+                }
               },
               child: const Icon(
                 Icons.add,
