@@ -4,6 +4,8 @@ import 'package:jumbo_app_flutter/services/preference.service.dart';
 import 'package:jumbo_app_flutter/widgets/preferences/preference_dialog.dart';
 import 'package:jumbo_app_flutter/widgets/products/first_use_disclaimer.dart';
 
+bool firstUse = true;
+
 class PreferenceSelector extends StatefulWidget {
   const PreferenceSelector({super.key});
 
@@ -86,7 +88,12 @@ class _PreferenceSelectorState extends State<PreferenceSelector> {
                 margin: const EdgeInsets.only(right: 8.0, bottom: 8.0),
                 child: OutlinedButton(
                   onPressed: () {
-                    _openFirstUseDisclaimer();
+                    if (firstUse == true) {
+                      _openFirstUseDisclaimer();
+                      firstUse = false;
+                    } else {
+                      _openOptionDialog();
+                    }
                     // _openOptionDialog();
                   },
                   style: OutlinedButton.styleFrom(
@@ -112,7 +119,12 @@ class _PreferenceSelectorState extends State<PreferenceSelector> {
               ),
               onPressed: () {
                 // _openOptionDialog();
-                _openFirstUseDisclaimer();
+                if (firstUse == true) {
+                  _openFirstUseDisclaimer();
+                  firstUse = false;
+                } else {
+                  _openOptionDialog();
+                }
               },
               child: const Icon(
                 Icons.add,
