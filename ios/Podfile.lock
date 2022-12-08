@@ -1,6 +1,8 @@
 PODS:
   - arkit_plugin (0.0.1):
     - Flutter
+  - fast_barcode_scanner (0.0.1):
+    - Flutter
   - Firebase/CoreOnly (10.1.0):
     - FirebaseCore (= 10.1.0)
   - Firebase/Database (10.1.0):
@@ -35,6 +37,7 @@ PODS:
 
 DEPENDENCIES:
   - arkit_plugin (from `.symlinks/plugins/arkit_plugin/ios`)
+  - fast_barcode_scanner (from `.symlinks/plugins/fast_barcode_scanner/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_database (from `.symlinks/plugins/firebase_database/ios`)
   - Flutter (from `Flutter`)
@@ -53,6 +56,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   arkit_plugin:
     :path: ".symlinks/plugins/arkit_plugin/ios"
+  fast_barcode_scanner:
+    :path: ".symlinks/plugins/fast_barcode_scanner/ios"
   firebase_core:
     :path: ".symlinks/plugins/firebase_core/ios"
   firebase_database:
@@ -64,6 +69,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   arkit_plugin: 3e42571e8be84adabb8a178bd51c22fa981e16bd
+  fast_barcode_scanner: 0df01447443e9f9c7a6859844d8c4719887100b4
   Firebase: 444b35a9c568a516666213c2f6cccd10cb12559f
   firebase_core: d2242c6f318db1d0dcecfbfa491e943337b0d755
   firebase_database: e27e635c7b0c1097a5968aa477978753c1eef64b
