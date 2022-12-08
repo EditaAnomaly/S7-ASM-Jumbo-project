@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jumbo_app_flutter/pages/payment_page.dart';
 import 'package:jumbo_app_flutter/widgets/basket/barcode_scanner.dart';
 import 'package:jumbo_app_flutter/widgets/basket/basket_panel.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -90,7 +91,12 @@ class _BasketPageState extends State<BasketPage> {
   }
 
   _onPay() {
-    print("pay");
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const PaymentPage(),
+      ),
+    );
   }
 
   _setScanning(bool value) {
