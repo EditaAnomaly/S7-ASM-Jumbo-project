@@ -4,8 +4,11 @@ import 'package:jumbo_app_flutter/models/products/product.dart';
 import 'package:jumbo_app_flutter/services/product.service.dart';
 
 class ProductAlert extends StatelessWidget {
-  ProductAlert(this.product, this.warnings, this.callback, {super.key});
-  final Function(Product) callback;
+  ProductAlert(
+      this.product, this.warnings, this.callbackAdd, this.callbackCancel,
+      {super.key});
+  final Function(Product) callbackAdd;
+  final Function callbackCancel;
   final ProductService productService = ProductService();
   final Product product;
   final List<Allergen> warnings;
@@ -15,9 +18,6 @@ class ProductAlert extends StatelessWidget {
     return AlertDialog(
       shape:
           const Border(left: BorderSide(width: 6.0, color: Color(0xffEEB717))),
-      //shape: RoundedRectangleBorder(
-      // borderRadius: BorderRadius.circular(20.0),
-      // side: const BorderSide(width: 6.0, color: Color((0xffEEB717)))),
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: const [
@@ -56,7 +56,7 @@ class ProductAlert extends StatelessWidget {
             textStyle: const TextStyle(fontSize: 20),
           ),
           onPressed: () {
-            callback(product);
+            callbackAdd(product);
             Navigator.of(context).pop();
           },
           child: const Text('Add anyway'),
@@ -70,6 +70,7 @@ class ProductAlert extends StatelessWidget {
             ),
             child: const Text('Cancel', style: TextStyle(color: Colors.black)),
             onPressed: () {
+              callbackCancel();
               Navigator.of(context).pop();
             })
       ],

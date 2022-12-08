@@ -14,6 +14,8 @@ class _PriceTextState extends State<PriceText> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 30,
+      padding: const EdgeInsets.only(top: 2),
       alignment: Alignment.center,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
