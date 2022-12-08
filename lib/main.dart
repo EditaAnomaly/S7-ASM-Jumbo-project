@@ -48,7 +48,7 @@ class _MainPageState extends State<MainPage> {
     const BasketPage(),
     const CataloguePage(),
     const ProfilePage(),
-    const ARNavigationWidget(),
+    // const ARNavigationWidget(),
   ];
 
   @override
@@ -79,8 +79,8 @@ class _MainPageState extends State<MainPage> {
             icon: Icon(Icons.search_outlined), label: "Catalogue"),
         BottomNavigationBarItem(
             icon: Icon(Icons.person_outline), label: "Profile"),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.location_city), label: "Navigation"),
+        // BottomNavigationBarItem(
+        //     icon: Icon(Icons.location_city), label: "Navigation"),
       ],
       iconSize: 33,
       unselectedFontSize: 13,
