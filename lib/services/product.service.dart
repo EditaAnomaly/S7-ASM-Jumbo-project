@@ -7,21 +7,26 @@ import 'dart:convert';
 class ProductService {
   final apiService = Api();
 
-  Future<Product> scan(barcode) async {
+  Future<Product?> scan(barcode) async {
     var product = await fetchProduct(barcode);
-    await setMetaData(product);
 
+    if (product == null) return null;
+
+    await setMetaData(product);
     return product;
   }
 
   // FETCH PRODUCT USING EAN BARCODE <8718452461158>
-  Future<Product> fetchProduct(String barcode) async {
+  Future<Product?> fetchProduct(String barcode) async {
     final response = await apiService.get('search?q=$barcode');
 
-    final json =
-        jsonDecode(utf8.decode(response.bodyBytes))['products']['data'][0];
-
-    return Product.fromJson(json);
+    try {
+      final json =
+          jsonDecode(utf8.decode(response.bodyBytes))['products']['data'][0];
+      return Product.fromJson(json);
+    } catch (error) {
+      return null;
+    }
   }
 
   // SET INGREDIENTS AND ALLERGENS

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:jumbo_app_flutter/pages/payment_page.dart';
 import 'package:jumbo_app_flutter/widgets/basket/barcode_scanner.dart';
@@ -22,7 +24,7 @@ class BasketPage extends StatefulWidget {
 class _BasketPageState extends State<BasketPage> {
   final ProductService productService = ProductService();
   final Basket basket = Basket();
-  late Product scannedProduct;
+  late Product product;
   late List<Allergen> warnings;
 
   final PanelController panelController = PanelController();
@@ -32,20 +34,27 @@ class _BasketPageState extends State<BasketPage> {
     _onLoading();
     isScanning = false;
 
-    scannedProduct = await productService.scan(code);
-    warnings = productService.getWarnings(scannedProduct);
+    Product? scannedProduct = await productService.scan(code);
 
     if (!mounted) return;
     Navigator.of(context).pop(); // removes loading dialog
 
-    if (warnings.isEmpty) {
-      _successFeedback();
-      _addToBasket(scannedProduct);
+    if (scannedProduct == null) {
       _setScanning(true);
       return;
     }
 
-    _onProductAlert();
+    product = scannedProduct;
+    warnings = productService.getWarnings(product);
+
+    if (warnings.isNotEmpty) {
+      _onProductAlert();
+      return;
+    }
+
+    _successFeedback();
+    _addToBasket(product);
+    _setScanning(true);
   }
 
   _onProductAlert() async {
@@ -54,7 +63,7 @@ class _BasketPageState extends State<BasketPage> {
       context: context,
       builder: (BuildContext context) {
         return ProductAlert(
-          scannedProduct,
+          product,
           warnings,
           _callbackAdd,
           _callbackCancel,
@@ -129,12 +138,16 @@ class _BasketPageState extends State<BasketPage> {
 
   @override
   Widget build(BuildContext context) {
-    final availableHeight = MediaQuery.of(context).size.height -
+    var availableHeight = MediaQuery.of(context).size.height -
         kBottomNavigationBarHeight -
         AppBar().preferredSize.height -
         MediaQuery.of(context).padding.top -
-        MediaQuery.of(context).padding.bottom -
-        40; // padding bottom seems to be 0.0 on iOS, so - 40 for correct sizing
+        MediaQuery.of(context).padding.bottom;
+
+    if (Platform.isIOS) {
+      // padding bottom seems to be 0.0 on iOS, so - 40 for correct sizing
+      availableHeight += -40;
+    }
 
     final panelHeight = availableHeight;
     final cameraHeight = availableHeight / 2;
