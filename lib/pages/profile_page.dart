@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jumbo_app_flutter/widgets/preferences/preference_selector.dart';
+import 'package:jumbo_app_flutter/widgets/appbar.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -11,27 +12,8 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Row(children: const <Widget>[
-          Text(
-            'Your ',
-            style: TextStyle(
-              fontSize: 24,
-            ),
-          ),
-          Text(
-            'Profile',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ]),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        centerTitle: false,
-        leadingWidth: 0,
-      ),
+      appBar:
+          CustomAppBar(leading: "Your", pageName: "Profile", appBar: AppBar()),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
