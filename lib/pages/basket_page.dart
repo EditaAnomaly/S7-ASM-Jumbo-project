@@ -157,7 +157,7 @@ class _BasketPageState extends State<BasketPage> {
       appBar: CustomAppBar(
           leading: "Your",
           pageName: "Basket",
-          amount: Basket.items.length,
+          amount: basket.getAmount(),
           appBar: AppBar()),
       body: SlidingUpPanel(
         controller: panelController,
