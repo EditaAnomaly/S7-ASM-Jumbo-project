@@ -35,7 +35,7 @@ class _BasketItemCellState extends State<BasketItemCell> {
                   width: 50,
                 ),
               ),
-              Flexible(
+              Expanded(
                 child: Text(widget.item.product.title),
               ),
               Padding(
