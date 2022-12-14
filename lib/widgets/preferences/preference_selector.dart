@@ -31,13 +31,6 @@ class _PreferenceSelectorState extends State<PreferenceSelector> {
     });
   }
 
-  _removePreference(item) {
-    setState(() {
-      service.removeAllergen(item);
-      allergens.remove(item);
-    });
-  }
-
   _saveOptions(List<PreferenceOption> options) {
     _clearPreferences();
 

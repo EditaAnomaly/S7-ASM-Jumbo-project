@@ -41,7 +41,7 @@ class BasketPanel extends StatelessWidget {
             child: SliderIndicator(),
           ),
           if (Basket.items.isEmpty) ...[
-            EmptyBasket(),
+            const EmptyBasket(),
           ] else ...[
             Expanded(
               child: BasketList(

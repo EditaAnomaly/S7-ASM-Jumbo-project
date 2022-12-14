@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:jumbo_app_flutter/pages/payment_page.dart';
+import 'package:jumbo_app_flutter/services/settings.service.dart';
 import 'package:jumbo_app_flutter/widgets/basket/barcode_scanner.dart';
 import 'package:jumbo_app_flutter/widgets/basket/basket_panel.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -84,17 +85,29 @@ class _BasketPageState extends State<BasketPage> {
   }
 
   _successFeedback() async {
-    final player = AudioPlayer();
-    await player.play(AssetSource('sounds/scanned.mp3'));
-    FeedbackType type = FeedbackType.medium;
-    Vibrate.feedback(type);
+    if (SettingsService.isSoundOn) {
+      final player = AudioPlayer();
+      await player.play(AssetSource('sounds/scanned.mp3'));
+    }
+    if (SettingsService.isVibrationOn) {
+      FeedbackType type = FeedbackType.medium;
+      Vibrate.feedback(type);
+    } else {
+      return;
+    }
   }
 
   _errorFeedback() async {
-    final player = AudioPlayer();
-    await player.play(AssetSource('sounds/warning.mp3'));
-    FeedbackType type = FeedbackType.warning;
-    Vibrate.feedback(type);
+    if (SettingsService.isSoundOn) {
+      final player = AudioPlayer();
+      await player.play(AssetSource('sounds/warning.mp3'));
+    }
+    if (SettingsService.isVibrationOn) {
+      FeedbackType type = FeedbackType.warning;
+      Vibrate.feedback(type);
+    } else {
+      return;
+    }
   }
 
   _addToBasket(Product product) {
