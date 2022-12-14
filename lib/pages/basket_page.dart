@@ -12,6 +12,7 @@ import 'package:jumbo_app_flutter/models/products/product.dart';
 import 'package:jumbo_app_flutter/services/product.service.dart';
 import 'package:jumbo_app_flutter/widgets/loading_dialog.dart';
 import 'package:jumbo_app_flutter/widgets/products/product_alert.dart';
+import 'package:jumbo_app_flutter/widgets/appbar.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
@@ -153,26 +154,11 @@ class _BasketPageState extends State<BasketPage> {
     final cameraHeight = availableHeight / 2;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: [
-            const Text(
-              "Basket",
-              style: TextStyle(fontWeight: FontWeight.normal, fontSize: 24.0),
-            ),
-            Text(
-              " (${Basket.items.length.toString()})",
-              style: const TextStyle(
-                fontWeight: FontWeight.normal,
-                fontSize: 24.0,
-                color: Colors.grey,
-              ),
-            )
-          ],
-        ),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-      ),
+      appBar: CustomAppBar(
+          leading: "Your",
+          pageName: "Basket",
+          amount: basket.getAmount(),
+          appBar: AppBar()),
       body: SlidingUpPanel(
         controller: panelController,
         defaultPanelState: PanelState.OPEN,

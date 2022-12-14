@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jumbo_app_flutter/widgets/appbar.dart';
 
 class CataloguePage extends StatefulWidget {
   const CataloguePage({super.key});
@@ -10,11 +11,8 @@ class _CataloguePageState extends State<CataloguePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Catalogue'),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-      ),
+      appBar: CustomAppBar(
+          leading: "Search", pageName: "Catalogue", appBar: AppBar()),
       // body
     );
   }

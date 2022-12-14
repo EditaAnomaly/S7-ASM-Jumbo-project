@@ -16,6 +16,14 @@ class Basket {
     );
   }
 
+  int getAmount() {
+    int amount = 0;
+    for (BasketItem item in items) {
+      amount += item.amount;
+    }
+    return amount;
+  }
+
   BasketItem? findProduct(Product product) {
     int index = items.indexWhere((item) => item.product.id == product.id);
     return index >= 0 ? items[index] : null;
