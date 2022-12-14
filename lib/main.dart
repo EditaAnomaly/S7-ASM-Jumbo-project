@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:io' show Platform;
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:jumbo_app_flutter/pages/arkit_page.dart';
 import 'cubit/bottom_nav_cubit.dart';
 import 'pages/basket_page.dart';
 import 'pages/catalogue_page.dart';

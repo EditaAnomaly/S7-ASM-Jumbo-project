@@ -25,24 +25,5 @@ class BarcodeScanner extends StatelessWidget {
         BlurPreviewOverlay(),
       ],
     );
-    return BarcodeCamera(
-      types: const [
-        BarcodeType.ean8,
-        BarcodeType.ean13,
-      ],
-      resolution: Resolution.hd720,
-      framerate: Framerate.fps30,
-      mode: DetectionMode.pauseDetection,
-      position: CameraPosition.back,
-      onScan: (code) => {
-        onScan(code.value),
-      },
-      children: const [
-        MaterialPreviewOverlay(
-          animateDetection: false,
-          aspectRatio: 16.0 / 11.0,
-        ),
-      ],
-    );
   }
 }

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 // import 'package:jumbo_app_flutter/widgets/products/basket_item_cell.dart';
 
 class EmptyBasket extends StatefulWidget {
+  const EmptyBasket({super.key});
+
   @override
   State<StatefulWidget> createState() => _EmptyBasketState();
 }
