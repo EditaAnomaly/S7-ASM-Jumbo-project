@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -24,6 +25,16 @@ class BasketPage extends StatefulWidget {
 }
 
 class _BasketPageState extends State<BasketPage> {
+  @override
+  void initState() {
+    super.initState();
+    Timer(const Duration(seconds: 2), () {
+      setState(() {
+        _firstUseAnimate();
+      });
+    });
+  }
+
   final ProductService productService = ProductService();
   final Basket basket = Basket();
   final ShoppingList shoppingList = ShoppingList();
@@ -32,6 +43,17 @@ class _BasketPageState extends State<BasketPage> {
 
   final PanelController panelController = PanelController();
   bool isScanning = false;
+
+  _firstUseAnimate() {
+    panelController.animatePanelToPosition(0.6,
+        duration: const Duration(milliseconds: 500));
+
+    Timer(const Duration(seconds: 1), () {
+      setState(() {
+        panelController.open();
+      });
+    });
+  }
 
   _checkBarcode(code) async {
     _onLoading();
