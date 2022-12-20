@@ -15,14 +15,13 @@ class BarcodeScanner extends StatelessWidget {
       ],
       resolution: Resolution.hd720,
       framerate: Framerate.fps30,
-      mode: DetectionMode.pauseVideo,
+      mode: DetectionMode.pauseDetection,
       onScan: (code) => onScan(code.value),
       children: const [
         MaterialPreviewOverlay(
           animateDetection: false,
           aspectRatio: 16.0 / 11.0,
         ),
-        BlurPreviewOverlay(),
       ],
     );
   }

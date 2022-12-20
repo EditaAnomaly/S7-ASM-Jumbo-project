@@ -145,8 +145,10 @@ class _BasketPageState extends State<BasketPage> {
       isScanning = value;
       CameraController.instance.pauseDetector();
     } else if (!isScanning && value) {
-      isScanning = value;
-      CameraController.instance.resumeDetector();
+      Future.delayed(const Duration(milliseconds: 1200), () {
+        isScanning = value;
+        CameraController.instance.resumeDetector();
+      });
     }
   }
 
