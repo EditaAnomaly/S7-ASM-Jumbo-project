@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -28,11 +29,11 @@ class _BasketPageState extends State<BasketPage> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 2), () {
+    if (this.mounted) {
       setState(() {
         _firstUseAnimate();
       });
-    });
+    }
   }
 
   final ProductService productService = ProductService();
@@ -44,15 +45,32 @@ class _BasketPageState extends State<BasketPage> {
   final PanelController panelController = PanelController();
   bool isScanning = false;
 
-  _firstUseAnimate() {
-    panelController.animatePanelToPosition(0.6,
-        duration: const Duration(milliseconds: 500));
-
-    Timer(const Duration(seconds: 1), () {
-      setState(() {
-        panelController.open();
+  Future<String?> _firstUseAnimate() async {
+    try {
+      await Future.delayed(const Duration(seconds: 1));
+      Timer(
+        const Duration(seconds: 2),
+        () {
+          try {
+            panelController.animatePanelToPosition(0.6,
+                duration: const Duration(milliseconds: 500));
+          } catch (e) {
+            log("Panel controller was not able to close.");
+          }
+        },
+      );
+      Timer(const Duration(seconds: 3), () {
+        if (this.mounted) {
+          setState(() {
+            panelController.open();
+          });
+        }
+        ;
       });
-    });
+    } catch (e) {
+      log("Panel controller was not able to open.");
+    }
+    return null;
   }
 
   _checkBarcode(code) async {
