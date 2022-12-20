@@ -61,7 +61,8 @@ class BasketPanel extends StatelessWidget {
         backgroundColor: const Color(0xffEEB717),
         tooltip: 'Scan',
         foregroundColor: Colors.black,
-        child: const Icon(Icons.qr_code_scanner_rounded),
+        child: Image.asset('images/scanbar.png',
+            width: 30, height: 30, fit: BoxFit.fill),
       ),
       bottomNavigationBar: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),

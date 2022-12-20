@@ -119,10 +119,15 @@ class _PreferenceSelectorState extends State<PreferenceSelector> {
                   _openOptionDialog();
                 }
               },
-              child: const Icon(
-                Icons.add,
-                size: 20.0,
-              ),
+              child: allergens.isEmpty
+                  ? const Icon(
+                      Icons.add,
+                      size: 20.0,
+                    )
+                  : const Icon(
+                      Icons.edit,
+                      size: 20.0,
+                    ),
             ),
           ],
         )
