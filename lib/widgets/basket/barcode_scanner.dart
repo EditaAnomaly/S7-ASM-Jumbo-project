@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:fast_barcode_scanner/fast_barcode_scanner.dart';
 import 'package:flutter/material.dart';
 
@@ -15,13 +17,16 @@ class BarcodeScanner extends StatelessWidget {
       ],
       resolution: Resolution.hd720,
       framerate: Framerate.fps30,
-      mode: DetectionMode.pauseDetection,
+      mode: Platform.isIOS
+          ? DetectionMode.pauseVideo
+          : DetectionMode.pauseDetection,
       onScan: (code) => onScan(code.value),
-      children: const [
-        MaterialPreviewOverlay(
-          animateDetection: false,
+      children: [
+        const MaterialPreviewOverlay(
+          animateDetection: true,
           aspectRatio: 16.0 / 11.0,
         ),
+        if (Platform.isIOS) const BlurPreviewOverlay(),
       ],
     );
   }
