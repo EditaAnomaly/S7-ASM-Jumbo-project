@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:jumbo_app_flutter/models/basket.dart';
 import 'package:jumbo_app_flutter/models/products/product.dart';
 import 'package:jumbo_app_flutter/widgets/products/basket_item_cell.dart';
+import 'package:jumbo_app_flutter/services/settings.service.dart';
 
 class BasketList extends StatefulWidget {
   final ScrollController scrollController;
@@ -18,6 +20,10 @@ class BasketList extends StatefulWidget {
 
 class _BasketListState extends State<BasketList> {
   _updateItemAmount(BasketItem item, String action) {
+    if (SettingsService.isVibrationOn) {
+      FeedbackType type = FeedbackType.medium;
+      Vibrate.feedback(type);
+    }
     if (action == "add") {
       widget.add(item.product);
     } else if (action == "remove") {
