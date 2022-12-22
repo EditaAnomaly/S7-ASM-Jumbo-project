@@ -14,9 +14,9 @@ class Node {
   factory Node.fromJson(Map<String, dynamic> json) {
     return Node(
       type: json['type'],
-      xOffset: json['x_offset'],
-      yOffset: json['y_offset'],
-      zOffset: json['z_offset'],
+      xOffset: json['x_offset'].toDouble(),
+      yOffset: json['y_offset'].toDouble(),
+      zOffset: json['z_offset'].toDouble(),
     );
   }
 }

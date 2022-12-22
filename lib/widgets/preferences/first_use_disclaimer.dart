@@ -19,7 +19,7 @@ class FirstUseDisclaimer extends StatelessWidget {
           Text(
             'Use this app with caution. Nothing in this app should be taken as health advice. Always double-check the ingredients!',
             style: TextStyle(fontSize: 18),
-          )
+          ),
         ],
       ),
       actions: [
@@ -36,17 +36,18 @@ class FirstUseDisclaimer extends StatelessWidget {
           child: const Text('Acknowledge'),
         ),
         TextButton(
-            style: OutlinedButton.styleFrom(
-              side: const BorderSide(
-                color: Color(0xffC8C8C8),
-              ),
-              textStyle: const TextStyle(fontSize: 16),
+          style: OutlinedButton.styleFrom(
+            side: const BorderSide(
+              color: Color(0xffC8C8C8),
             ),
-            child: const Text('Cancel (close)',
-                style: TextStyle(color: Colors.black)),
-            onPressed: () {
-              Navigator.of(context).pop();
-            })
+            textStyle: const TextStyle(fontSize: 16),
+          ),
+          child: const Text('Cancel (close)',
+              style: TextStyle(color: Colors.black)),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
       ],
       actionsAlignment: MainAxisAlignment.spaceEvenly,
     );

@@ -4,15 +4,19 @@ import 'package:jumbo_app_flutter/models/basket.dart';
 import 'package:jumbo_app_flutter/models/products/product.dart';
 import 'package:jumbo_app_flutter/widgets/products/basket_item_cell.dart';
 import 'package:jumbo_app_flutter/services/settings.service.dart';
+import 'package:jumbo_app_flutter/widgets/products/empty_basket.dart';
 
 class BasketList extends StatefulWidget {
   final ScrollController scrollController;
-  final List<BasketItem> items;
   final Function(Product) add;
   final Function(Product) remove;
 
-  const BasketList(this.scrollController, this.items, this.add, this.remove,
-      {super.key});
+  const BasketList({
+    super.key,
+    required this.scrollController,
+    required this.add,
+    required this.remove,
+  });
 
   @override
   State<StatefulWidget> createState() => _BasketListState();
@@ -35,12 +39,16 @@ class _BasketListState extends State<BasketList> {
   Widget build(BuildContext context) {
     return ListView(
       controller: widget.scrollController,
-      children: <Widget>[
-        for (BasketItem item in widget.items)
-          BasketItemCell(
-            item,
-            _updateItemAmount,
-          ),
+      children: [
+        if (Basket.items.isNotEmpty) ...[
+          for (BasketItem item in Basket.items)
+            BasketItemCell(
+              item,
+              update: _updateItemAmount,
+            ),
+        ] else ...[
+          const EmptyBasket()
+        ],
       ],
     );
   }
