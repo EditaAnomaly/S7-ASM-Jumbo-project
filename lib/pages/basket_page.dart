@@ -43,7 +43,7 @@ class _BasketPageState extends State<BasketPage> {
     Navigator.of(context).pop(); // removes loading dialog
 
     if (scannedProduct == null) {
-      _setScanning(true);
+      _setScanning(true, true);
       return;
     }
 
@@ -57,7 +57,7 @@ class _BasketPageState extends State<BasketPage> {
 
     _successFeedback();
     _addToBasket(product);
-    _setScanning(true);
+    _setScanning(true, true);
   }
 
   _onProductAlert() async {
@@ -125,22 +125,28 @@ class _BasketPageState extends State<BasketPage> {
 
   _callbackAdd(Product product) {
     _addToBasket(product);
-    _setScanning(true);
+    _setScanning(true, true);
   }
 
   _callbackCancel() {
-    _setScanning(true);
+    _setScanning(true, true);
   }
 
-  _setScanning(bool value) {
+  _setScanning(bool value, bool hasScanned) {
     if (isScanning && !value) {
       isScanning = value;
       CameraController.instance.pauseDetector();
     } else if (!isScanning && value) {
-      Future.delayed(Duration(milliseconds: Platform.isIOS ? 600 : 1200), () {
+      print(hasScanned);
+      if (hasScanned) {
+        Future.delayed(Duration(milliseconds: Platform.isIOS ? 600 : 1200), () {
+          isScanning = value;
+          CameraController.instance.resumeDetector();
+        });
+      } else {
         isScanning = value;
         CameraController.instance.resumeDetector();
-      });
+      }
     }
   }
 
@@ -193,10 +199,10 @@ class _BasketPageState extends State<BasketPage> {
           topRight: Radius.circular(16),
         ),
         onPanelClosed: () {
-          _setScanning(true);
+          _setScanning(true, false);
         },
         onPanelOpened: () {
-          _setScanning(false);
+          _setScanning(false, false);
         },
       ),
     );
