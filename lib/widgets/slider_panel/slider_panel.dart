@@ -29,6 +29,12 @@ class SliderPanel extends StatelessWidget {
     removeCallback(product);
   }
 
+  _togglePanel() {
+    panelController.panelPosition.round() == 1
+        ? panelController.close()
+        : panelController.open();
+  }
+
   @override
   Widget build(BuildContext context) {
     onPay() {
@@ -46,12 +52,9 @@ class SliderPanel extends StatelessWidget {
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(76),
           child: Column(
-            children: const [
-              Padding(
-                padding: EdgeInsets.only(top: 16, bottom: 8),
-                child: SliderIndicator(),
-              ),
-              PanelTabBar(),
+            children: [
+              SliderIndicator(_togglePanel),
+              const PanelTabBar(),
             ],
           ),
         ),
