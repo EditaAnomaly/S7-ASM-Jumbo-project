@@ -5,6 +5,7 @@ import 'package:jumbo_app_flutter/models/navigation/destination.dart';
 
 class NavigationService {
   final ref = FirebaseDatabase.instance.ref();
+  static bool isFirstUse = true;
 
   Future<Destination> fetchDestination(String destination) async {
     final snapshot = await ref.child('destination/$destination').get();

@@ -1,7 +1,10 @@
+import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:jumbo_app_flutter/models/shopping_list.dart';
+import 'package:jumbo_app_flutter/services/navigation.service.dart';
 import 'package:jumbo_app_flutter/services/settings.service.dart';
 import 'package:jumbo_app_flutter/widgets/barcode_scanner.dart';
 import 'package:jumbo_app_flutter/widgets/slider_panel/slider_panel.dart';
@@ -24,6 +27,16 @@ class BasketPage extends StatefulWidget {
 }
 
 class _BasketPageState extends State<BasketPage> {
+  @override
+  void initState() {
+    super.initState();
+    if (mounted) {
+      setState(() {
+        _firstUseAnimate();
+      });
+    }
+  }
+
   final ProductService productService = ProductService();
   final Basket basket = Basket();
   final ShoppingList shoppingList = ShoppingList();
@@ -32,6 +45,36 @@ class _BasketPageState extends State<BasketPage> {
 
   final PanelController panelController = PanelController();
   bool isScanning = false;
+
+  void _firstUseAnimate() async {
+    if (!NavigationService.isFirstUse) return;
+    NavigationService.isFirstUse = false;
+    try {
+      await Future.delayed(const Duration(seconds: 1));
+      Timer(
+        const Duration(seconds: 2),
+        () {
+          try {
+            panelController.animatePanelToPosition(
+              0.6,
+              duration: const Duration(milliseconds: 500),
+            );
+          } catch (e) {
+            log("Panel controller was not able to close.");
+          }
+        },
+      );
+      Timer(const Duration(seconds: 3), () {
+        if (mounted) {
+          setState(() {
+            panelController.open();
+          });
+        }
+      });
+    } catch (e) {
+      log("Panel controller was not able to open.");
+    }
+  }
 
   _checkBarcode(code) async {
     _onLoading();
