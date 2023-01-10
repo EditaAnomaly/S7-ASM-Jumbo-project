@@ -49,40 +49,39 @@ class _PreferenceDialogSate extends State<PreferenceDialog> {
       )),
       actions: [
         TextButton(
-          style: TextButton.styleFrom(
-            foregroundColor: Colors.black,
-            backgroundColor: const Color(0xffEEB717),
-            fixedSize: const Size(70, 45),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            textStyle: const TextStyle(fontSize: 20),
-          ),
           onPressed: () {
             widget.callback(widget.options);
             Navigator.of(context).pop();
           },
-          child: const Text("Save",
-              style: TextStyle(fontFamily: 'Jumbo', fontSize: 18)),
+          style: TextButton.styleFrom(
+            padding: const EdgeInsets.only(left: 30.0, right: 30.0),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            backgroundColor: const Color(0xffEEB717),
+            foregroundColor: Colors.black,
+          ),
+          child: const Text("Save"),
         ),
-        TextButton(
-            style: OutlinedButton.styleFrom(
-              fixedSize: const Size(90, 45),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              side: const BorderSide(
-                color: Color(0xffEEB717),
-              ),
-              textStyle: const TextStyle(fontSize: 18),
+        OutlinedButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          style: OutlinedButton.styleFrom(
+            padding: const EdgeInsets.only(left: 30.0, right: 30.0),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
             ),
-            child: const Text(
-              "Cancel",
-              style: TextStyle(color: Colors.black, fontFamily: 'Jumbo'),
+            side: const BorderSide(
+              color: Color(0xffEEB717),
             ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            })
+            foregroundColor: Colors.black,
+          ),
+          child: const Text(
+            "Cancel",
+            style: TextStyle(color: Colors.black, fontFamily: 'Jumbo'),
+          ),
+        ),
       ],
       actionsAlignment: MainAxisAlignment.spaceEvenly,
     );

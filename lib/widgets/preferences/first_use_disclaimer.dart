@@ -24,29 +24,35 @@ class FirstUseDisclaimer extends StatelessWidget {
       ),
       actions: [
         TextButton(
-          style: TextButton.styleFrom(
-            foregroundColor: Colors.black,
-            backgroundColor: const Color(0xffEEB717),
-            textStyle: const TextStyle(fontSize: 16),
-          ),
           onPressed: () {
             Navigator.of(context).pop();
             callback();
           },
+          style: TextButton.styleFrom(
+            padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            backgroundColor: const Color(0xffEEB717),
+            foregroundColor: Colors.black,
+          ),
           child: const Text('Acknowledge'),
         ),
-        TextButton(
-          style: OutlinedButton.styleFrom(
-            side: const BorderSide(
-              color: Color(0xffC8C8C8),
-            ),
-            textStyle: const TextStyle(fontSize: 16),
-          ),
-          child: const Text('Cancel (close)',
-              style: TextStyle(color: Colors.black)),
+        OutlinedButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
+          style: OutlinedButton.styleFrom(
+            padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            side: const BorderSide(
+              color: Color(0xffEEB717),
+            ),
+            foregroundColor: Colors.black,
+          ),
+          child: const Text("Cancel (close)"),
         ),
       ],
       actionsAlignment: MainAxisAlignment.spaceEvenly,
