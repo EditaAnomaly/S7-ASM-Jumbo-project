@@ -5,18 +5,20 @@ import 'package:jumbo_app_flutter/models/products/product.dart';
 class ShoppingList {
   static final List<Category> categories = [
     Category(
-      name: "Sauzen",
+      name: "Koek, snoep, chocolade en chips",
       destination: "algorythm",
       [
-        BasketItem(1, pindaSaus),
-        BasketItem(1, knoflookSaus),
+        BasketItem(1, chocolate),
+        BasketItem(1, cookies),
       ],
     ),
     Category(
-      name: "Tomatenblokjes, -puree",
+      name: "Fris, sap, koffie, thee",
       destination: "algorythm",
       [
-        BasketItem(2, tomatenBlokjes),
+        BasketItem(2, sparklingWater),
+        BasketItem(1, juice),
+        BasketItem(1, drinkMeal)
       ],
     )
   ];
@@ -44,27 +46,44 @@ class Category {
   });
 }
 
-final pindaSaus = Product(
-  id: "148336ZK",
+final chocolate = Product(
+  id: "453487PAK",
   image:
-      'https://static-images.jumbo.com/product_images/261020220809_148336ZK-1_360x360.png',
+      'https://static-images.jumbo.com/product_images/301120211324_453487PAK-1_360x360.png',
+  price: Price(currency: 'EUR', amount: 213),
+  title: "Hands Off My Chocolate Crunchy Hazelnut 100g",
+  quantity: "1",
+);
+final cookies = Product(
+  id: "305339ZK",
+  image:
+      'https://static-images.jumbo.com/product_images/290420210545_305339ZK-1_360x360.png',
+  price: Price(currency: 'EUR', amount: 299),
+  title: "BioToday Kokos-Citroenkoekjes 175g",
+  quantity: "1",
+);
+final sparklingWater = Product(
+  id: "363841BLK",
+  image:
+      'https://static-images.jumbo.com/product_images/270620200313_363841BLK-1_360x360.png',
   price: Price(currency: 'EUR', amount: 105),
-  title: "Conimex Mix Pinda Satésaus 68g",
+  title:
+      "Charlie's Organics Framboos & Limoen Bruisend Water & Geperst Fruit 330ml",
   quantity: "1",
 );
-final knoflookSaus = Product(
-  id: "386260FLS",
+final juice = Product(
+  id: "498385PAK",
   image:
-      'https://static-images.jumbo.com/product_images/271120200355_386260FLS-1_360x360.png',
-  price: Price(currency: 'EUR', amount: 89),
-  title: "Jumbo Knoflook Saus 250ML",
+      'https://static-images.jumbo.com/product_images/180520221253_498385PAK-1_360x360.png',
+  price: Price(currency: 'EUR', amount: 223),
+  title: "DubbelFrisss Ananas & Mango 1, 5L",
   quantity: "1",
 );
-final tomatenBlokjes = Product(
-  id: "218376DS",
+final drinkMeal = Product(
+  id: "403879FLS",
   image:
-      'https://static-images.jumbo.com/product_images/130920211704_218376DS-1_360x360.png',
-  price: Price(currency: 'EUR', amount: 69),
-  title: "Jumbo Tomatenblokjes 400g",
+      'https://static-images.jumbo.com/product_images/191120210708_403879FLS-1_360x360.png',
+  price: Price(currency: 'EUR', amount: 365),
+  title: "YFood Gebalanceerde Drinkmaaltijd Classic Choco 500ml",
   quantity: "1",
 );
