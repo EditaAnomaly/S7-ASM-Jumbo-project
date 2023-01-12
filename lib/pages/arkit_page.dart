@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:arkit_plugin/arkit_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:jumbo_app_flutter/models/navigation/destination.dart';
@@ -53,13 +55,10 @@ class _ARNavigationWidgetState extends State<ARNavigationWidget> {
       if (anchor is ARKitImageAnchor) {
         lastNodeTransform = anchor.transform;
 
-        // for (Node node in destination.nodes) {
-        // var arrowNode = createNode(node);
-        // arkitController.add(arrowNode);
-        // }
-        destination.nodes.asMap().forEach((index, current) {
-          var next = destination.nodes[index + 1];
-          var arrowNode = createNode(current, next);
+        destination.nodes.asMap().forEach((currentIndex, currentNode) {
+          var nextIndex = currentIndex + 1;
+          var nextNode = destination.nodes[nextIndex];
+          var arrowNode = createNode(currentNode, nextNode);
           arkitController.add(arrowNode);
         });
       }
@@ -85,25 +84,23 @@ class _ARNavigationWidgetState extends State<ARNavigationWidget> {
     arrowNode.transform = lastNodeTransform * targetTranslation;
     lastNodeTransform = arrowNode.transform;
 
-    Matrix4 nextTranslation = Matrix4.identity();
-    nextTranslation.setColumn(
-      3,
-      Vector4(
-        nextNode.xOffset,
-        nextNode.yOffset,
-        nextNode.zOffset,
-        1,
-      ),
-    );
-
-    Matrix4 nextNodeTransform = arrowNode.transform * nextTranslation;
-
-    arrowNode.eulerAngles = Vector3(
-      nextNodeTransform.row3.x,
-      nextNodeTransform.row3.y,
-      nextNodeTransform.row3.z,
-    );
+    // set rotation
+    double zRadian = atan2(nextNode.yOffset, nextNode.xOffset);
+    arrowNode.eulerAngles = Vector3(0, 0, zRadian);
 
     return arrowNode;
+  }
+
+  void lookAt(ARKitNode node, Vector3 targetPosition) {
+    Vector3 position = node.position;
+    Vector3 direction = targetPosition - position;
+    direction.normalize();
+    Vector3 up = Vector3(0, 1, 0);
+    Vector3 forward = direction;
+    Vector3 right = direction.cross(up);
+    up = right.cross(forward);
+    final rotationMatrix = Matrix3(right.x, right.y, right.z, up.x, up.y, up.z,
+        forward.x, forward.y, forward.z);
+    node.rotation = rotationMatrix;
   }
 }

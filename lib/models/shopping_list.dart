@@ -6,7 +6,7 @@ class ShoppingList {
   static final List<Category> categories = [
     Category(
       name: "Koek, snoep, chocolade en chips",
-      destination: "algorythm",
+      destination: "cookies",
       [
         BasketItem(1, chocolate),
         BasketItem(1, cookies),
@@ -14,7 +14,7 @@ class ShoppingList {
     ),
     Category(
       name: "Fris, sap, koffie, thee",
-      destination: "algorythm",
+      destination: "drinks",
       [
         BasketItem(2, sparklingWater),
         BasketItem(1, juice),
